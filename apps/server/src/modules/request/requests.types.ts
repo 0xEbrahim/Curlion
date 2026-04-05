@@ -1,13 +1,8 @@
+import { BaseTimeStampsPrototype } from "../../shared/types/types.js";
+
 export type RequestMethod = "get" | "post" | "put" | "patch" | "delete";
 
-export type RequestHeader = {
-  id: string;
-  key: string;
-  value: string;
-  isEnabled: boolean;
-};
-
-export type RequestQueryParam = {
+export type KeyValueEntry = {
   id: string;
   key: string;
   value: string;
@@ -44,12 +39,13 @@ export type RequestBody =
       }>;
     };
 
-export interface RequestSchema {
+export interface RequestType extends BaseTimeStampsPrototype {
   id: string;
   name: string;
+  collection: string;
   method: RequestMethod;
-  headers: RequestHeader[];
-  queryParam: RequestQueryParam;
+  headers: KeyValueEntry[];
+  queryParam: KeyValueEntry[];
   body: RequestBody;
   url: string;
 }
