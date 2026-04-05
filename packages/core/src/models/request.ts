@@ -1,4 +1,4 @@
-import { BaseTimeStampsPrototype } from "../../shared/types/types.js";
+import { BaseTimeStampsPrototype } from "../shared/types.js";
 
 export type RequestMethod = "get" | "post" | "put" | "patch" | "delete";
 

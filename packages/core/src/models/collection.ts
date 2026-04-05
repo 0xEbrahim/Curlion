@@ -1,5 +1,5 @@
-import { BaseTimeStampsPrototype } from "../../shared/types/types.js";
-import { RequestType } from "../request/requests.types.js";
+import { BaseTimeStampsPrototype } from "../shared/types.js";
+import { RequestType } from "./request.js";
 
 export interface BaseCollectionChildren {
   id: string;
