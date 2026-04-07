@@ -1,9 +1,8 @@
-export interface CreateCollectionDto {
-  name: string;
-  description?: string;
-}
+import type { z } from 'zod';
+import type {
+  createCollectionSchema,
+  updateCollectionSchema,
+} from './collection.schemas.js';
 
-export interface UpdateCollectionDto {
-  name?: string;
-  description?: string;
-}
+export type CreateCollectionDto = z.infer<typeof createCollectionSchema>;
+export type UpdateCollectionDto = z.infer<typeof updateCollectionSchema>;
