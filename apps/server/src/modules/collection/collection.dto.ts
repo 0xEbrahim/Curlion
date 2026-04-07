@@ -4,5 +4,7 @@ import type {
   updateCollectionSchema,
 } from './collection.schemas.js';
 
-export type CreateCollectionDto = z.infer<typeof createCollectionSchema>;
-export type UpdateCollectionDto = z.infer<typeof updateCollectionSchema>;
+type Clean<T> = { [K in keyof T]: Exclude<T[K], undefined> };
+
+export type CreateCollectionDto = Clean<z.infer<typeof createCollectionSchema>>;
+export type UpdateCollectionDto = Clean<z.infer<typeof updateCollectionSchema>>;
