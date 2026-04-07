@@ -1,9 +1,10 @@
-export interface CreateCollectionDto {
-  name: string;
-  description?: string;
-}
+import type { z } from 'zod';
+import type {
+  createCollectionSchema,
+  updateCollectionSchema,
+} from './collection.schemas.js';
 
-export interface UpdateCollectionDto {
-  name?: string;
-  description?: string;
-}
+type Clean<T> = { [K in keyof T]: Exclude<T[K], undefined> };
+
+export type CreateCollectionDto = Clean<z.infer<typeof createCollectionSchema>>;
+export type UpdateCollectionDto = Clean<z.infer<typeof updateCollectionSchema>>;

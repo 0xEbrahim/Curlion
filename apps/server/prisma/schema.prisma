@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Collection {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  folders     Folder[]
+  requests    Request[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Folder {
+  id           String      @id @default(cuid())
+  name         String
+  collectionId String
+  parentId     String?
+
+  collection   Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  parent       Folder?     @relation("FolderToFolder", fields: [parentId], references: [id], onDelete: Cascade)
+  children     Folder[]    @relation("FolderToFolder")
+  requests     Request[]
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([collectionId])
+  @@index([parentId])
+}
+
+model Request {
+  id           String      @id @default(cuid())
+  name         String
+  collectionId String
+  folderId     String?
+  method       String      @default("GET")
+  url          String      @default("")
+  headers      String      @default("[]")
+  queryParams  String      @default("[]")
+  body         String      @default("{\"type\":\"none\"}")
+
+  collection   Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  folder       Folder?     @relation(fields: [folderId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([collectionId])
+  @@index([folderId])
+}
