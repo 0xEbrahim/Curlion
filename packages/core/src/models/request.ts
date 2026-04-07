@@ -1,51 +1,35 @@
-import { BaseTimeStampsPrototype } from "../shared/types.js";
+import { BaseTimeStampsPrototype } from "../shared/types";
 
-export type RequestMethod = "get" | "post" | "put" | "patch" | "delete";
+export type RequestMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "PATCH"
+  | "DELETE"
+  | "HEAD"
+  | "OPTIONS";
 
 export type KeyValueEntry = {
   id: string;
   key: string;
   value: string;
-  isEnabled: boolean;
+  enabled: boolean;
 };
-
-export type RequestBodyType =
-  | "none"
-  | "json"
-  | "text"
-  | "form-urlencoded"
-  | "multipart-form-data";
 
 export type RequestBody =
   | { type: "none" }
   | { type: "json"; content: string }
   | { type: "text"; content: string }
-  | {
-      type: "form-urlencoded";
-      entries: Array<{
-        id: string;
-        key: string;
-        value: string;
-        enabled: boolean;
-      }>;
-    }
-  | {
-      type: "multipart-form-data";
-      entries: Array<{
-        id: string;
-        key: string;
-        value: string;
-        enabled: boolean;
-      }>;
-    };
+  | { type: "form-urlencoded"; entries: KeyValueEntry[] }
+  | { type: "multipart-form-data"; entries: KeyValueEntry[] };
 
 export interface RequestType extends BaseTimeStampsPrototype {
   id: string;
   name: string;
-  collection: string;
+  collectionId: string;
   method: RequestMethod;
   headers: KeyValueEntry[];
-  queryParam: KeyValueEntry[];
+  queryParams: KeyValueEntry[];
   body: RequestBody;
   url: string;
 }

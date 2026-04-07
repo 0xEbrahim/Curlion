@@ -1,28 +1,25 @@
-import { BaseTimeStampsPrototype } from "../shared/types.js";
-import { RequestType } from "./request.js";
+import { BaseTimeStampsPrototype } from "../shared/types";
 
-export interface BaseCollectionChildren {
+export interface BaseCollectionNode {
   id: string;
   name: string;
 }
 
-export interface CollectionRequestChildren extends BaseCollectionChildren {
+export interface CollectionRequestNode extends BaseCollectionNode {
   type: "request";
-  request: RequestType;
+  requestId: string;
 }
 
-export interface CollectionFolderChildren extends BaseCollectionChildren {
+export interface CollectionFolderNode extends BaseCollectionNode {
   type: "folder";
-  children: CollectionSlot;
+  children: CollectionNode[];
 }
 
-export type CollectionSlot =
-  | CollectionFolderChildren
-  | CollectionRequestChildren;
+export type CollectionNode = CollectionFolderNode | CollectionRequestNode;
 
 export interface Collection extends BaseTimeStampsPrototype {
   id: string;
   name: string;
   type: "collection";
-  children: CollectionSlot;
+  children: CollectionNode[];
 }
